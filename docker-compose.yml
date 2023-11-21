@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  cache:
+    image: redis:6.2.6
+    container_name: cache_event_delivery
+    restart: always
+    ports:
+      - '9999:9999'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+    networks:
+      event_delivery:
+        aliases:
+          - "cache"
+
+volumes:
+  dbdata:
+  cache:
+    driver: local
+
+networks:
+  event_delivery:
+    driver: bridge
