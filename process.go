@@ -46,12 +46,12 @@ func ProcessSingleEvent() {
 		return
 	}
 
-	// success := sendToDestination(event)
-	// if !success {
-	// 	log.Printf("Failed to deliver event: %v", event)
-	// 	scheduleRetry(failedEvent{
-	// 		Event: event,
-	// 		RetryCount: 1, // Intial retry attempt
-	// 	})
-	// }
+	success := SendToDestination(event)
+	if !success {
+		log.Printf("Failed to deliver event: %v", event)
+		// scheduleRetry(failedEvent{
+		// 	Event:      event,
+		// 	RetryCount: 1, // Intial retry attempt
+		// })
+	}
 }
