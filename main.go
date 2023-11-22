@@ -1,10 +1,15 @@
 package main
 
-import "context"
+import (
+	"context"
+
+	"github.com/sirupsen/logrus"
+)
 
 var (
-	rdb RedisClientInterface   // Redis Client
-	ctx = context.Background() // Global context Redis operation
+	rdb    RedisClientInterface   // Redis Client
+	ctx    = context.Background() // Global context Redis operation
+	logger = logrus.New()         // logrus logger instance
 )
 
 const (
@@ -20,6 +25,6 @@ func main() {
 
 	// Start a separate routine to process failed events.
 	for i := 0; i < 10; i++ {
-		//go ProcessFailedEvents(i)
+		go ProcessFailedEvents(i)
 	}
 }
