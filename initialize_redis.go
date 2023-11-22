@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 )
 
 // InitializingRedis Sets up a connection to the Redis Server
@@ -17,7 +17,7 @@ func InitializingRedis() {
 	})
 
 	fmt.Println("Initialize Redis", myRedis)
-	rdb = &RedisClientWrapper{Client: client}
+	rdb := &RedisClientWrapper{Client: client}
 
 	_, err := rdb.Ping(ctx).Result()
 	if err != nil {
