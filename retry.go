@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"math"
 	"time"
@@ -16,7 +17,7 @@ func ScheduleRetry(event FailedEvent) {
 	// if retries are exhausted, log and potentially alert
 	if event.RetryCount > MaxRetries {
 		log.Printf("Failed to deliver event after %d attempts: %v", MaxRetries, event.Event)
-		// NotifyAdmin("Event Delivery Failed", fmt.Printf("Failed to deliver event after %d attempts: %v", MaxRetries, event.Event))
+		NotifyAdmin("Event Delivery Failed", fmt.Sprintf("Failed to deliver event after %d attempts: %v", MaxRetries, event.Event))
 		return
 	}
 
