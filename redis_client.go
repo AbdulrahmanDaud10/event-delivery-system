@@ -55,7 +55,14 @@ func (wrapper *RedisClientWrapper) LLen(ctx context.Context, key string) *redis.
 }
 
 func (wrapper *RedisClientWrapper) ZAdd(ctx context.Context, key string, members ...*redis.Z) *redis.IntCmd {
-	return wrapper.Client.ZAdd(ctx, key, members...)
+	// Unpack members and convert them to []redis.Z
+	zMembers := make([]redis.Z, len(members))
+	for i, member := range members {
+		zMembers[i] = *member
+	}
+
+	// Call ZAdd with individual elements
+	return wrapper.Client.ZAdd(ctx, key, zMembers...)
 }
 
 func (wrapper *RedisClientWrapper) ZRangeByScoreWithScores(ctx context.Context, key string, opt *redis.ZRangeBy) *redis.ZSliceCmd {
