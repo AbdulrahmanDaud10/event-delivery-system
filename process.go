@@ -12,8 +12,8 @@ type Event struct {
 	PayLoad string `json:"payload"`
 }
 
-// FallEvent represents an event that has failed delivery, along with the count of retry attempts
-type FallEvent struct {
+// FailedEvent represents an event that has failed delivery, along with the count of retry attempts
+type FailedEvent struct {
 	Event      Event
 	RetryCount int
 }
@@ -49,9 +49,9 @@ func ProcessSingleEvent() {
 	success := SendToDestination(event)
 	if !success {
 		log.Printf("Failed to deliver event: %v", event)
-		// scheduleRetry(failedEvent{
-		// 	Event:      event,
-		// 	RetryCount: 1, // Intial retry attempt
-		// })
+		ScheduleRetry(FailedEvent{
+			Event:      event,
+			RetryCount: 1, // Intial retry attempt
+		})
 	}
 }
